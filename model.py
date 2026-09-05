@@ -50,8 +50,16 @@ def decode_ids_to_tokens(ids, id_to_token):
         result.append(id_to_token[each_id])
     return result
 
-# Step 5 - pad_id_sequence (not yet solved)
-# TODO: implement
+# Step 5 - pad_id_sequence
+def pad_id_sequence(ids, max_len, pad_id):
+    # TODO: return a list of length exactly max_len, padding with pad_id or truncating.
+    if len(ids) < max_len: 
+        for i in range(max_len - len(ids)):
+            ids.append(pad_id)
+    elif len(ids) > max_len:
+        temp = [ids[i] for i in range(max_len)]
+        ids = temp
+    return ids
 
 # Step 6 - stack_padded_sequences_to_batch (not yet solved)
 # TODO: implement
