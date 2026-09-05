@@ -122,11 +122,11 @@ def build_sinusoidal_positional_encoding(max_len, d_model):
     # POSITION EMBEDDING:     
     # PE(pos, 2i)   = sin(pos * 10000^(-2i / d_model))
     # PE(pos, 2i+1) = cos(pos * 10000^(-2i / d_model))
-    dim = torch.arange(max_len, dtype=torch.float).reshape(max_len, 1)
-    scale = torch.tensor([10000 ** ((-2 * i) / d_model) for i in range(d_model // 2)], dtype=torch.float)
+    position = torch.arange(max_len, dtype=torch.float).reshape(max_len, 1)
+    div_term = torch.tensor([10000 ** ((-2 * i) / d_model) for i in range(d_model // 2)], dtype=torch.float)
     pe = torch.zeros(max_len, d_model)
-    pe[:, 0::2] = torch.sin(scale * dim)
-    pe[:, 1::2] = torch.cos(scale * dim)
+    pe[:, 0::2] = torch.sin(div_term * position)
+    pe[:, 1::2] = torch.cos(div_term * position)
     return pe
 
 # Step 13 - add_positional_encoding_to_embeddings (not yet solved)
