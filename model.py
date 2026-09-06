@@ -308,8 +308,14 @@ def multi_head_scaled_dot_product_attention(q_h, k_h, v_h, mask=None):
     ctx = attn @ v_h
     return ctx, attn
 
-# Step 30 - merge_heads_and_project_output (not yet solved)
-# TODO: implement
+# Step 30 - merge_heads_and_project_output
+import torch
+
+def merge_heads_and_project_output(context, w_o, b_o):
+    # TODO: merge the head axis back into d_model and apply the output linear projection.
+    result = merge_heads_back_to_model_dim(context)
+    result = apply_linear_projection(result, w_o, b_o)
+    return result
 
 # Step 31 - assemble_multi_head_attention_forward (not yet solved)
 # TODO: implement
