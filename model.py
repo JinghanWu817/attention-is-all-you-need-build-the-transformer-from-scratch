@@ -334,10 +334,10 @@ def assemble_multi_head_attention_forward(query, key, value, w_q, w_k, w_v, w_o,
     if mask is not None:
         scores = scores.masked_fill(~mask, float('-inf'))        
     attn = torch.softmax(scores, dim=-1)
-    attn = attn.nan_to_num(0.0) @ v
-    attn = attn.reshape(b_q, l_q, -1)
-    attn = attn @ w_o
-    return attn
+    ctx = attn.nan_to_num(0.0) @ v
+    ctx = ctx.reshape(b_q, l_q, -1)
+    ctx = ctx @ w_o
+    return ctx
 
 # Step 32 - apply_ffn_first_linear_and_relu (not yet solved)
 # TODO: implement
