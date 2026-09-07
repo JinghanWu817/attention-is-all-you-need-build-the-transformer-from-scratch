@@ -647,8 +647,29 @@ def init_decoder_layer_parameters(d_model, num_heads, d_ff):
     }
     return decoder_layer_parameters
 
-# Step 54 - init_embedding_and_projection_parameters (not yet solved)
-# TODO: implement
+# Step 54 - init_embedding_and_projection_parameters
+import torch
+
+def init_embedding_and_projection_parameters(vocab_size, d_model, tie_weights=True):
+    """Allocate src/tgt embeddings and output projection (optionally tied)."""
+    # TODO: allocate three (vocab_size, d_model) tensors with requires_grad=True
+    def xavier(shape):
+        w = torch.empty(*shape, dtype=torch.float32)
+        w = torch.nn.init.xavier_uniform_(w)
+        w.requires_grad_()
+        return w
+
+    embedding_parameters={
+        'src_embedding': xavier((vocab_size, d_model)),
+        'tgt_embedding': xavier((vocab_size, d_model))
+    }
+
+    if tie_weights:
+        embedding_parameters['output_projection'] = embedding_parameters['tgt_embedding']
+    else:
+         embedding_parameters['output_projection'] = xavier((vocab_size, d_model))
+
+    return embedding_parameters
 
 # Step 55 - collect_model_parameters_into_list (not yet solved)
 # TODO: implement
